@@ -148,8 +148,6 @@ function jwtpbm_login(WP_REST_Request $request)
         return new WP_Error('token_generation_failed', $token_response['message'], array('status' => 401));
      }
 
-
-
     // Return token
     return new WP_REST_Response($token_response, 200);
 }

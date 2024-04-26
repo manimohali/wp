@@ -48,7 +48,7 @@ class JWTPBM_JWTManager {
             $token = base64_encode($jwt);
 
             $response_A = [
-                'status' => 1,
+                'status' => 1, 
                 'token' => $token,
                 'refreshToken' => $refreshToken,
             ];
