@@ -14,6 +14,41 @@
  #define constant for current plugin dir
  define('JWTPBM_PLUGIN_DIR', __DIR__);
 
+ 
+
+ register_activation_hook( __FILE__, 'activate_jwtpbm_webhooks' );
+ register_deactivation_hook( __FILE__, 'deactivate_jwtpbm_webhooks' );
+
+ 
+
+ /**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-jwtpbm-activator.php
+ */
+function activate_jwtpbm_webhooks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jwtpbm-activator.php';
+	JWTPBM_Activator::activate();
+}
+
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-jwtpbm-deactivator.php
+ */
+function deactivate_jwtpbm_webhooks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jwtpbm-deactivator.php';
+	JWTPBM_Deactivator::deactivate();
+}
+
+/** included api file **/
+include JWTPBM_PLUGIN_DIR.'/api/index.php';
+
+/** included hooks file **/
+include_once JWTPBM_PLUGIN_DIR . '/hooks/hooks.php';
+
+
+
+
 
 # function to  cache a page on first time load on frontend once page loads, then it will  store page data on static file and after that serer page from that static file.
 function cache_page_on_first_load() {
@@ -142,23 +177,6 @@ function wp_foot_js_loaded() {
 <?php
 }
 
-
-
-
-add_filter('qsm_submit_results_return_array', 'qsm_submit_results_return_array_callback', 10, 2);
-function qsm_submit_results_return_array_callback($return_array, $qmn_array_for_variables) {
-    $custom_result_Array = [];
-    $custom_result_Array['total_points'] = $qmn_array_for_variables['total_points'];
-    $custom_result_Array['total_score'] = $qmn_array_for_variables['total_score'];
-    $custom_result_Array['total_correct'] = $qmn_array_for_variables['total_correct'];
-    $custom_result_Array['total_questions'] = $qmn_array_for_variables['total_questions'];
-    $custom_result_Array['total_possible_points'] = $qmn_array_for_variables['total_possible_points'];
-    $custom_result_Array['minimum_possible_points'] = $qmn_array_for_variables['minimum_possible_points'];
-
-    $return_array = array_merge($return_array, $custom_result_Array);
-    return $return_array;
-}
-
 # creating cron run every 15 minutes and update up_option table key name `my_test_cron_key` 
 // if (!wp_next_scheduled('my_test_cron_key')) {
 //     wp_schedule_event(time(), 15, 'my_test_cron_key');
@@ -174,31 +192,3 @@ function qsm_submit_results_return_array_callback($return_array, $qmn_array_for_
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	include 'wp-cli.php';
 }
-
-function is_request_to_rest_api_by_1x() {
-    if ( empty( $_SERVER['REQUEST_URI'] ) ) {
-        return false;
-    }
-
-    $rest_prefix = trailingslashit( rest_get_url_prefix() );
-    $request_uri = esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) );
-
-    // Check if the request is to the WC API endpoints.
-    $woocommerce = ( false !== strpos( $request_uri, $rest_prefix . 'wc/' ) );
-    return $woocommerce;
-}
-
-
-add_filter( 'determine_current_user','authenticate_by_1x',10 );
-function authenticate_by_1x($user_id ) {
-    if ( !is_request_to_rest_api_by_1x() ) {
-        return $user_id ;
-    }
-    
-    return 1382;
-    // echo "Done";
-}
-
-/** included api file **/
-
-include JWTPBM_PLUGIN_DIR.'/api/index.php';
