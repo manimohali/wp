@@ -184,8 +184,7 @@ function is_request_to_rest_api_jwtpbm() {
 */
 add_filter( 'determine_current_user','authenticate_jwtpbm',10 );
 function authenticate_jwtpbm($user_id ) {
-    $headers = getallheaders();
-
+    
     if ( !is_request_to_rest_api_jwtpbm() ) {
         return $user_id ;
     }
