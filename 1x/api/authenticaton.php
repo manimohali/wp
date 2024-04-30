@@ -176,9 +176,6 @@ function is_request_to_rest_api_jwtpbm() {
 
 
 
-
-
-
 /**
  * @param $user_id  int|false
 */
