@@ -12,14 +12,24 @@
  */
 
  #define constant for current plugin dir
+ 
+ ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+
  define('JWTPBM_PLUGIN_DIR', __DIR__);
 
- 
+ if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	include 'wp-cli.php';
+}
+
+    include_once 'cron.php';
 
  register_activation_hook( __FILE__, 'activate_jwtpbm_webhooks' );
  register_deactivation_hook( __FILE__, 'deactivate_jwtpbm_webhooks' );
 
- 
 
  /**
  * The code that runs during plugin activation.
@@ -40,14 +50,12 @@ function deactivate_jwtpbm_webhooks() {
 	JWTPBM_Deactivator::deactivate();
 }
 
+
 /** included api file **/
 include JWTPBM_PLUGIN_DIR.'/api/index.php';
 
 /** included hooks file **/
 include_once JWTPBM_PLUGIN_DIR . '/hooks/index.php';
-
-
-
 
 
 # function to  cache a page on first time load on frontend once page loads, then it will  store page data on static file and after that serer page from that static file.
@@ -105,6 +113,8 @@ function save_db_query_result() {
     $query_hash = md5($query);
     $wpdb->query("INSERT INTO wp_db_query_results (query_hash, result) VALUES ('$query_hash', '$result')");
 }
+
+
 // add_action('wp_footer', 'save_db_query_result');
 
 
@@ -177,18 +187,11 @@ function wp_foot_js_loaded() {
 <?php
 }
 
-# creating cron run every 15 minutes and update up_option table key name `my_test_cron_key` 
-// if (!wp_next_scheduled('my_test_cron_key')) {
-    // wp_schedule_event(time(), 15, 'my_test_cron_key');
-
-//     function my_test_cron_function() {
-
-        
-//         update_option('my_test_cron_key', );
-
-//     }
-// }
-
-if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	include 'wp-cli.php';
+//Assigning  upload files capability to customer role
+add_filter( 'user_has_cap', 'my_user_has_cap_1', 10, 3 );
+function my_user_has_cap_1( $allcaps, $caps, $args ) {
+    if(in_array('customer', $allcaps)){
+        $allcaps['upload_files'] = true;
+    }
+    return $allcaps;
 }

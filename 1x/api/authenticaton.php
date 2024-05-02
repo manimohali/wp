@@ -217,11 +217,16 @@ function jwtpbm_override_user_permission( $permission, $context, $object_id, $po
     // if ( strpos( $current_route, 'your-specific-route' ) !== false ) {
     // }
 
-    // $user  = wp_get_current_user();
-    // $user_id   = (int) $user->ID;
-    // if($user_id == 0 ){
-    //     return $permission;
-    // }
+    $user  = wp_get_current_user();
+    $user_id   = (int) $user->ID;
+    if($user_id == 0 ){
+        return $permission;
+    }
+
+    //if user customer and has capability to read  
+     if(in_array('customer',$user->roles) && current_user_can('read')){
+        return true;
+    }
 
     return $permission;
 }

@@ -43,11 +43,10 @@ class JWTPBM_Posts {
         if (!$post) {
             return new WP_Error('post_not_found', 'Post not found.', array('status' => 404));
         }
-
         return new WP_REST_Response($post, 200);
     }
 
-    
+
     public function get_posts_by_category(WP_REST_Request $request) {
         $term_id         = $request->get_param('term_id');
         $page            = is_null($request->get_param('page')) ? 1 : $request->get_param('page');
@@ -67,7 +66,7 @@ class JWTPBM_Posts {
             'post_status'    => $post_status,
             'tax_query' => array(
                 array(
-                    'taxonomy' => $taxonomy ,
+                    'taxonomy' => $taxonomy,
                     'field'    => 'term_id',
                     'terms'    => array($term_id),
                 ),
