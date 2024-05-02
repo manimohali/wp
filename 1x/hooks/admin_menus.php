@@ -14,7 +14,7 @@ function jwtpbm_add_admin_menu() {
 
 function page_title_slug_1_page_content() {
 ?>
-    <div class="wrap"><h1> <?php echo get_admin_page_title(); ?></div>
+    <div class="wrap"><h1> <?php echo get_admin_page_title(); ?></div> 
     <div class="wrap">
         
 
@@ -128,7 +128,6 @@ function page_title_slug_1_page_content() {
                 }
 
                 function deleteCategory(instance) {
-                    debugger;
                     jQuery(instance).closest('li').remove();
                 }
 
@@ -164,7 +163,7 @@ function page_title_slug_1_page_content() {
                     background: transparent;
                     height: 37px;
                     display: block;
-                    position: relative;
+                    position: static;
                     border: 1px solid #9E9E9E;
                     width: 60%;
                     margin-top: -35px;

@@ -4,13 +4,15 @@
 function permission_callback_JWTPBM($request) {
     $respone = verify_bearer_authorization_header_JWTPBM();
     if ($respone['status'] != 1) {
-        return false;
+        return new WP_Error('invalid_token', $respone['message'], array('status' => $respone['error_code']));
     }
     return (int) $respone['data']->sub;
 }
 
 add_action('rest_api_init', 'jwtpbm_register_api', 10);
 function jwtpbm_register_api($wp_rest_server) {
+    $JWTPBM_Posts =  new JWTPBM_Posts;
+    $JWTPBM_WP_Options =  new JWTPBM_WP_Options;
     /*
     * @prefix jwtpbm ( JWT plugin By Mani )
     */
@@ -36,28 +38,6 @@ function jwtpbm_register_api($wp_rest_server) {
     ));
 
 
-    register_rest_route($route_prefix, '/register', array(
-        'methods' => 'POST',
-        'callback' => 'jwtpbm_register_user',
-        'permission_callback' => '__return_true',
-        'args' => array(
-            'email' => array(
-                'type' => 'string',
-                'required' => true,
-                'description' => 'The user email address',
-            ),
-            'password' => array(
-                'type' => 'string',
-                'required' => true,
-                'description' => 'The user password',
-            ),
-            'username' => array(
-                'type' => 'string',
-                'required' => true,
-                'description' => 'The user username',
-            )
-        ),
-    ));
 
     register_rest_route($route_prefix, '/register', array(
         'methods' => 'POST',
@@ -98,7 +78,7 @@ function jwtpbm_register_api($wp_rest_server) {
 
     register_rest_route($route_prefix, '/posts', array(
         'methods' => 'GET',
-        'callback' => [JWTPBM_Posts, 'get_posts'],
+        'callback' => [$JWTPBM_Posts, 'get_posts'],
         'permission_callback' => 'permission_callback_JWTPBM',
         'args' => array(
 
@@ -130,7 +110,7 @@ function jwtpbm_register_api($wp_rest_server) {
 
     register_rest_route($route_prefix, '/post', array(
         'methods' => 'GET',
-        'callback' => [JWTPBM_Posts, 'get_post'],
+        'callback' => [$JWTPBM_Posts, 'get_post'],
         'permission_callback' => 'permission_callback_JWTPBM',
         'args' => array(
 
@@ -143,5 +123,50 @@ function jwtpbm_register_api($wp_rest_server) {
     ));
 
 
-    
+    register_rest_route($route_prefix, '/category/head', array(
+        'methods' => 'GET',
+        'callback' => [$JWTPBM_WP_Options, 'head_categories'],
+        'permission_callback' => 'permission_callback_JWTPBM',
+        'args' => array(
+
+        ),
+    ));
+
+    register_rest_route($route_prefix, '/category/posts', array(
+        'methods' => 'GET',
+        'callback' => [$JWTPBM_Posts, 'get_posts_by_category'],
+        'permission_callback' => 'permission_callback_JWTPBM',
+        'args' => array(
+
+            'term_id' => array(
+                'type' => 'integer',
+                'required' => true,
+                'description' => 'Category id (term_id ) is required',
+            ),
+            'posts_per_page' => array(
+                'type' => 'integer',
+                'required' => false,
+                'description' => 'Posts per page ( In integer)',
+            ),
+            'page' => array(
+                'type' => 'integer',
+                'required' => false,
+                'description' => 'Current page number',
+            ),
+            'taxonomy' => array(
+                'type' => 'string',
+                'required' => false,
+                'description' => 'Taxonomy name ( slug )',
+            ),
+            'post_type' => array(
+                'type' => 'string',
+                'required' => false,
+                'description' => 'Post type slug',
+            ),
+
+        ),
+    ));
+
+
+
 }

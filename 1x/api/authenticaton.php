@@ -149,7 +149,7 @@ function verify_bearer_authorization_header_JWTPBM(){
         $response['data'] = $decoded;
     } catch (\Exception  $e) {
         $error_mesage = $e->getMessage();
-        $response['error_code']= $e->getCode();
+        $response['error_code']= $e->getCode() == 0 ? 400 : $e->getCode();
         $response['message'] = $error_mesage;
     }
 
@@ -196,3 +196,34 @@ function authenticate_jwtpbm($user_id ) {
 
     return (int) $respone['data']->sub;
 }
+
+
+
+
+
+/**
+ * Overrider user permission for rest api 
+ * @param $permission  bool
+ * @param $context  string   read|create|edit|delete|batch
+ * @param $object_id  int  UserId
+ * @param $post_type  string    'reports'| 'product'
+*/
+
+add_filter( 'woocommerce_rest_check_permissions', 'jwtpbm_override_user_permission', 9999999, 4 );
+function jwtpbm_override_user_permission( $permission, $context, $object_id, $post_type ) {
+    if($permission) return $permission;   // If permission is already true then return it
+
+    // $current_route = $_SERVER['REQUEST_URI'];
+    // if ( strpos( $current_route, 'your-specific-route' ) !== false ) {
+    // }
+
+    // $user  = wp_get_current_user();
+    // $user_id   = (int) $user->ID;
+    // if($user_id == 0 ){
+    //     return $permission;
+    // }
+
+    return $permission;
+}
+
+
