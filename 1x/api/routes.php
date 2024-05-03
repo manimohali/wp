@@ -127,9 +127,7 @@ function jwtpbm_register_api($wp_rest_server) {
         'methods' => 'GET',
         'callback' => [$JWTPBM_WP_Options, 'head_categories'],
         'permission_callback' => 'permission_callback_JWTPBM',
-        'args' => array(
-
-        ),
+        'args' => array(),
     ));
 
     register_rest_route($route_prefix, '/category/posts', array(
@@ -167,6 +165,8 @@ function jwtpbm_register_api($wp_rest_server) {
         ),
     ));
 
-
-
+    register_rest_route($route_prefix, '/customer/(?P<customer_id>\d+)/product/(?P<product_id>\d+)', array(
+        'methods'  => 'GET',
+        'callback' => [$JWTPBM_Posts, 'custom_get_customer_product_data'],
+    ));
 }

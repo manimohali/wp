@@ -195,3 +195,5 @@ function my_user_has_cap_1( $allcaps, $caps, $args ) {
     }
     return $allcaps;
 }
+
+

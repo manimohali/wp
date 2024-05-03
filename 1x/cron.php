@@ -1,6 +1,5 @@
 <?php 
 
-
 /** 
  * $ wp cron event list
  * $ Sudo crontab -e
@@ -10,10 +9,7 @@
 
 
 // Custom cron schedules 
-
- 
- add_filter( 'cron_schedules', 'custom_register_cron_schedules' );
-
+ add_filter( 'cron_schedules', 'custom_register_cron_schedules',999999999 );
  function custom_register_cron_schedules( $schedules ) {
      $schedules['minutely'] = array(
          'interval' => MINUTE_IN_SECONDS, 
@@ -27,10 +23,8 @@
  
      return $schedules;
  }
- 
- 
 
-
+ 
 // Schedule the cron job to run every minute.
 if (!wp_next_scheduled('my_custom_cron_job')) {
     // wp_schedule_event(time(), 'minutely', 'my_custom_cron_job');
@@ -61,7 +55,8 @@ function my_custom_cron_function() {
 
 
 
-/** Run cron job once */
+/** =============  Run cron job once =============  */
+
 add_action( 'custom_single_cron_job_hook', 'custom_single_cron_job_function' );
 function custom_single_cron_job_function() {
     // Your code here

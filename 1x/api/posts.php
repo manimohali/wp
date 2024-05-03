@@ -96,4 +96,21 @@ class JWTPBM_Posts {
             return new WP_Error('unknow_error',  $error_message, array('status' => $error_code));
         }
     }
+
+    public function custom_get_customer_product_data($request) {
+        $customer_id = $request['customer_id'];
+        $product_id = $request['product_id'];
+
+        // $post_data = $request->get_params();
+        $current_page   = is_null($request->get_param('current_page')) ? 1 : $request->get_param('current_page');
+
+        // For demonstration, let's return the extracted values
+        $response = array(
+            'customer_id' => $customer_id,
+            'product_id' => $product_id,
+            'post_value' => $current_page,
+        );
+
+        return new WP_REST_Response($response, 200);
+    }
 }
