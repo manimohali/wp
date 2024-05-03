@@ -11,11 +11,10 @@
  * License URI: https://opensource.org/licenses/MIT
  */
 
- #define constant for current plugin dir
  
- ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 
 
@@ -25,10 +24,11 @@ error_reporting(E_ALL);
 	include 'wp-cli.php';
 }
 
-    include_once 'cron.php';
+include_once 'cron.php';
 
- register_activation_hook( __FILE__, 'activate_jwtpbm_webhooks' );
- register_deactivation_hook( __FILE__, 'deactivate_jwtpbm_webhooks' );
+
+register_activation_hook( __FILE__, 'activate_jwtpbm_webhooks' );
+register_deactivation_hook( __FILE__, 'deactivate_jwtpbm_webhooks' );
 
 
  /**
