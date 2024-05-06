@@ -165,8 +165,19 @@ function jwtpbm_register_api($wp_rest_server) {
         ),
     ));
 
+
+    // this route accept only intiger only (customer_id:int , product_id:int)
     register_rest_route($route_prefix, '/customer/(?P<customer_id>\d+)/product/(?P<product_id>\d+)', array(
         'methods'  => 'GET',
         'callback' => [$JWTPBM_Posts, 'custom_get_customer_product_data'],
     ));
+
+
+    // this route accept  string and int both (customer_id:string|int , product_id:int)
+    register_rest_route($route_prefix, '/customer/(?P<customer_id>[a-zA-Z0-9-]+)/product/(?P<product_id>\d+)', array(
+        'methods'  => 'GET',
+        'callback' => [$JWTPBM_Posts, 'custom_get_customer_product_data_string'],
+    ));
+    
+    
 }
