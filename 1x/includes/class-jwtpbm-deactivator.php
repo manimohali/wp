@@ -10,7 +10,7 @@ class JWTPBM_Deactivator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function deactivate() {
 
 	}
 
