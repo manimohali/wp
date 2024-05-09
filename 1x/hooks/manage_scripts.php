@@ -8,7 +8,7 @@ function jwtpbm_register_wp_enqueue_scripts_admin_end($hook ) {
     wp_register_style( '1x-admin-css', JWTPBM_PLUGIN_URL .'hooks/css/admin.css', array(), $plugin_version );
 
     wp_register_style( '1x-nestable-css', JWTPBM_PLUGIN_URL .'hooks/css/jquery.nestable.min.css', array(), $plugin_version );
-    wp_register_script( '1x-nestable-js', JWTPBM_PLUGIN_URL .'hooks/js/jquery.nestable.min.js', array( 'jquery' ), $plugin_version, true );
+    wp_register_script( '1x-nestable-js', JWTPBM_PLUGIN_URL .'hooks/js/jquery.nestable.js', array( 'jquery' ), $plugin_version, true );
 
     wp_register_script( '1x-select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array( ), $plugin_version );
     wp_register_script( '1x-select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '1.10.24', false );

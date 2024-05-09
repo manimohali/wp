@@ -75,30 +75,30 @@ function custom_menu_page_2() {
 }
 
 function sortable_menu_page() {
-    $cat_data_arr =[];
-        $args = array(
-            'taxonomy' => 'product_cat',
-            // 'orderby'  => 'include',
-            //'include'  => $term_ids,
-            'hide_empty' => false
-        );
+    $cat_data_arr = [];
+    $args = array(
+        'taxonomy' => 'product_cat',
+        // 'orderby'  => 'include',
+        //'include'  => $term_ids,
+        'hide_empty' => false
+    );
 
-        $product_categories = get_terms($args);
-        foreach ($product_categories as $category) {
-            $category->name = str_replace('&amp;', '&', $category->name);
-            $cat_data_arr[] = ['id' => $category->term_id, 'text' => $category->name];
-        }
+    $product_categories = get_terms($args);
+    foreach ($product_categories as $category) {
+        $category->name = str_replace('&amp;', '&', $category->name);
+        $cat_data_arr[] = ['id' => $category->term_id, 'text' => $category->name];
+    }
 
 
-    
+
 ?>
-  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script> -->
 
 
-<select id="mySelect" style="width: 300px;">
+    <select id="mySelect" style="width: 300px;">
         <option value="">Select an option...</option>
-</select>
+    </select>
     <!-- <div class="wrap">
         <div class="dd" id="nestable">
             <ol class="dd-list">
@@ -135,65 +135,106 @@ function sortable_menu_page() {
 
 
     <div class="dd" id="nestable">
-            <ol class="dd-list">
-                <li class="dd-item" data-id="1">
-                    <div class="dd-handle">
-                        <label >Item 1</label>
-                        <div class="content">
-                            <p>Content 1</p>
-                        </div>
+        <ol class="dd-list">
+            <li class="dd-item" data-id="1">
+                <div class="dd-handle">
+                    <label> <span class="item_name">Item 1</span> <button class="item-edit">Edit</button></label>
+                    <div class="content">
+                        <p>Content 1</p>
                     </div>
-                </li>
-                <li class="dd-item" data-id="2">
-                    <div class="dd-handle">
-                        <label > <span class="item_name">Item 2</span> <a class="item-edit" id="edit-2800139" href="javascript:void(0)">Edit</a></label>
-                        <div class="content">
-                            <p>Content 2</p>
-                        </div>
+                </div>
+            </li>
+            <li class="dd-item" data-id="2">
+                <div class="dd-handle">
+                    <label> <span class="item_name">Item 2</span> <button class="item-edit">Edit</button></label>
+                    <div class="content">
+                        <p>Content 2</p>
                     </div>
-                </li>
-            </ol>
+                </div>
+            </li>
+        </ol>
     </div>
-    
-
-    
 
 
-<script>
-    //   $( "#accordion" ).accordion({
-    //   collapsible: true
-    // });
 
-    <?php echo "var cat_data_arr = " . json_encode($cat_data_arr) . ";"; ?>
 
-    function insertcateory(parent,data) {
-        parent.find('.dd-list').append(`<li class="dd-item" data-id="${data.id}"><div class="dd-handle"> ${data.text}</div></li>`);
-    }
-    (function($) {
-        $(document).ready(function() {
-            $('#nestable').nestable();
 
-            $('#mySelect').select2({
-                data: cat_data_arr
+    <script>
+        //   $( "#accordion" ).accordion({
+        //   collapsible: true
+        // });
+
+        <?php echo "var cat_data_arr = " . json_encode($cat_data_arr) . ";"; ?>
+
+        function insertcateory(parent, data) {
+            parent.find('.dd-list').append(`<li class="dd-item" data-id="${data.id}"><div class="dd-handle"> ${data.text}</div></li>`);
+        }
+        (function($) {
+            $(document).ready(function() {
+                var nestable = $('#nestable').nestable();
+
+                $('#mySelect').select2({
+                    data: cat_data_arr
+                });
+
+                $('#mySelect').on('select2:select', function(e) {
+                    let id = e.params.data.id;
+                    let text = e.params.data.text;
+                    insertcateory($('#nestable'), {
+                        id: id,
+                        text: text
+                    })
+                });
+
+                $('#nestable').on('click', '.dd-handle .item-edit', function() {
+                    $(this).closest('.dd-handle').toggleClass('height-auto');
+                });
+
+                // used to get the serialized data
+                // window.JSON.stringify($('#nestable').nestable().nestable('serialize'))
+
+            
             });
 
-            $('#mySelect').on('select2:select', function(e) {
-                let id = e.params.data.id;
-                let text = e.params.data.text;
-                insertcateory($('#nestable'),{id:id,text:text}) 
-            });
+        })(jQuery);
+    </script>
 
-            // $('.dd-handle label').click(function() {
-            //     $(this).next('.content').toggle();
-            // });
+    <style>
+        .content {
+            display: none;
+        }
 
-            // $( "#accordion" ).accordion();
+        .dd-handle.height-auto .content {
+            display: block;
+        }
 
-        });
+        .dd-handle label {
+            width: 100%;
+            display: block;
+        }
 
-    })(jQuery);
-</script>
+        .dd-handle .item-edit {
+            background: deepskyblue;
+            width: 40px;
+            display: inline-block;
+            text-align: center;
+            color: #000;
+            padding: 0px 0px;
+        }
 
+        .dd-handle span.item_name {
+            display: inline-block;
+            width: calc(99.4% - 40px);
+        }
+
+        .height-auto {
+            height: auto;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
 
 <?php
 }
