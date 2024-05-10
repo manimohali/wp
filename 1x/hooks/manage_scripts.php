@@ -27,8 +27,6 @@ function jwtpbm_register_wp_enqueue_scripts_admin_end($hook ) {
 }
 
 
-
-
 /*** Register Scripts For Front End ***********/
 add_action( 'wp_enqueue_scripts', 'jwtpbm_register_wp_enqueue_scripts_front_end' );
 function jwtpbm_register_wp_enqueue_scripts_front_end() {

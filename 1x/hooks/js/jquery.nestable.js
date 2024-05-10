@@ -89,7 +89,7 @@
                     return;
                 }
 
-                debugger;
+                // debugger;
 
              
                 var handle = $(e.target);
