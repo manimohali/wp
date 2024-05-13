@@ -10,6 +10,19 @@ function jwtpbm_add_admin_menu() {
         'dashicons-admin-generic',
         6
     );
+
+
+    add_menu_page(
+        'Page title 2',
+        'Menu Title 2',
+        'manage_options',
+        'page-title-slug-2',
+        'page_title_slug_2_page_content',
+        'dashicons-admin-generic',
+        6
+    );
+
+
 }
 
 function page_title_slug_1_page_content() {
@@ -183,4 +196,10 @@ function page_title_slug_1_page_content() {
 
     </div>
 <?php
+}
+
+
+
+function page_title_slug_2_page_content()  {
+    echo '<div id="1x-root"></div>';
 }

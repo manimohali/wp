@@ -1,5 +1,34 @@
 <?php 
 
+/**
+ * Modify the added script 
+*/
+add_filter('script_loader_tag', 'add_type_script_attribute_1x' , 10, 3);
+function add_type_script_attribute_1x($tag, $handle, $src) {
+
+    if ( '1x-react-js' === $handle ) {
+        
+        $tag = '<script type="module"  crossorigin src="' . esc_url( $src ) . '"></script>';
+    }
+    return $tag;
+}
+
+/**
+ * Modify the added style
+ * apply_filters( 'style_loader_tag', $tag, $handle, $href, $media ); 
+*/
+
+add_filter('style_loader_tag', 'add_type_style_attribute_1x' , 10, 4);
+function add_type_style_attribute_1x($tag, $handle, $href, $media) {
+    
+    if ( '1x-react-css' === $handle ) {
+        $tag = '<link rel="stylesheet" id="'.$handle.'-css"  type="text/css" href="' . esc_url( $href ) . '" media="' . esc_attr( $media ) . '" />';
+    }
+
+    return $tag;
+}
+
+
 /**** Register Scripts For Admin Panel ***********/
 add_action( 'admin_enqueue_scripts', 'jwtpbm_register_wp_enqueue_scripts_admin_end' );
 function jwtpbm_register_wp_enqueue_scripts_admin_end($hook ) {
@@ -24,6 +53,15 @@ function jwtpbm_register_wp_enqueue_scripts_admin_end($hook ) {
         wp_enqueue_style( '1x-select2-css' );
         wp_enqueue_script( '1x-select2-js' );
     }
+
+    if ( 'toplevel_page_page-title-slug-2' == $hook ) {
+        wp_register_style( '1x-react-css', JWTPBM_PLUGIN_URL .'rc/rc/dist/assets/index.css', array(), $plugin_version );
+        wp_register_script( '1x-react-js', JWTPBM_PLUGIN_URL .'rc/rc/dist/assets/index.js', array(), $plugin_version.time(), false );
+        wp_enqueue_style( '1x-react-css' );
+        wp_enqueue_script( '1x-react-js');
+    }
+
+   
 }
 
 
