@@ -1,0 +1,21 @@
+{
+    "name": "ri-13/1x",
+    "prefer-stable" : true ,
+    "autoload": {
+        "psr-4": {
+            "Ri13\\1x\\": "src/"
+        }
+    },
+ 
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
+    }
+}

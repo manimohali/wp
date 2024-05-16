@@ -475,7 +475,8 @@ function sortable_menu_page() {
 // Save menu order
 add_action('wp_ajax_save_menu_order', 'save_menu_order_callback');
 
-function save_menu_order_callback() {
+function save_menu_order_callback() 
+{
     if (isset($_POST['order'])) {
         $order = $_POST['order'];
     }
