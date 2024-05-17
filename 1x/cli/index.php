@@ -1,3 +1,3 @@
-<?php 
+<?php
 
-include_once '1x-command.php';
+require_once '1x-command.php';

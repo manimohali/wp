@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc version="3.0">
+    <title>My Project Documentation</title>
+    <parser>
+        <target>output</target>
+        <extensions>php</extensions>
+        <paths>
+            <directory>.</directory>
+        </paths>
+        <ignore>
+            <directory>vendor</directory>
+            <directory>tools</directory>
+            <directory>output</directory>
+        </ignore>
+    </parser>
+    <transformer>
+        <target>output</target>
+    </transformer>
+</phpdoc>

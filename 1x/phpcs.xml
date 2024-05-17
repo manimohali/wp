@@ -2,8 +2,48 @@
 <ruleset name="WordPress Plugin 1x Coding Standards">
     <description>WordPress Plugin 1x Coding Standards</description>
     
+    <!-- Specify file extensions to include in the analysis ( PHPCS will process files with the extensions .php, .inc, and .module.) -->
+    <!-- <arg name="extensions" value="php,inc,module"/> -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Check for cross-version support for PHP 5.6 and higher. -->
+    <!-- <config name="testVersion" value="5.6-"/> -->
+
     <!-- Set the standard to WordPress -->
-    <arg name="standard" value="wordpress"/>
+    <rule ref="WordPress">
+        <!-- <exclude name="Generic.Files.LineLength.TooLong" />
+        <exclude name="Generic.Files.LowercasedFilename.NotFound" />
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" /> -->
+        <!-- <exclude name="PSR2.Files.EndFileNewline.TooMany" /> -->
+        
+        <exclude name="Generic.Commenting.DocComment.SpacingBeforeTags" />
+
+        <exclude name="WordPress.WP.CronInterval.CronSchedulesInterval" />
+
+        <exclude name="Squiz.PHP.CommentedOutCode.Found" />
+        <exclude name="Generic.Commenting.DocComment.MissingShort" />
+
+        <exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
+        <exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
+        <exclude name="WordPress.DB.PreparedSQL.InterpolatedNotPrepared" />
+        <exclude name="WordPress.DB.DirectDatabaseQuery.SchemaChange" />
+        <exclude name="WordPress.DB.PreparedSQL.NotPrepared" />
+
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+        <exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
+        <exclude name="WordPress.Security.NonceVerification.Missing" />
+        <exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash" />
+        <exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized" />
+
+
+        <exclude name="WordPress.WP.DeprecatedParameters.Get_termsParam2Found" />
+
+        <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
+
+        <exclude name="WordPress.PHP.YodaConditions.NotYoda" />
+
+    </rule>
     
     <!-- Specify the files or directories to be checked -->
     <file>./</file>
@@ -18,7 +58,7 @@
     <arg value="s"/>
     
     <!-- Set the severity level of issues to report -->
-    <arg name="severity" value="10"/>
+    <arg name="severity" value="5"/>
     
     <!-- Show progress of the run -->
     <arg value="p"/>

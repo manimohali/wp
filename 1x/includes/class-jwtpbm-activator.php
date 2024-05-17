@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 class JWTPBM_Activator {
@@ -11,7 +11,5 @@ class JWTPBM_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
 	}
-
 }

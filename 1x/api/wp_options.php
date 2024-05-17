@@ -2,47 +2,49 @@
 
 class JWTPBM_WP_Options {
 
-    public function __construct() {
-    }
+	public function __construct() {
+	}
 
-    public function head_categories(WP_REST_Request $request) {
-        $response = [];
-        $custom_campaign_selected_pages = get_option('custom_shop_page_cats', '');
-        if (empty($custom_campaign_selected_pages) || is_null($custom_campaign_selected_pages) || trim($custom_campaign_selected_pages) == '') {
-            $term_ids = [];
-        } else {
-            $term_ids = explode(',', $custom_campaign_selected_pages);
-        }
+	public function head_categories( WP_REST_Request $request ) {
+		$response                       = array();
+		$custom_campaign_selected_pages = get_option( 'custom_shop_page_cats', '' );
+		if ( empty( $custom_campaign_selected_pages ) || is_null( $custom_campaign_selected_pages ) || trim( $custom_campaign_selected_pages ) == '' ) {
+			$term_ids = array();
+		} else {
+			$term_ids = explode( ',', $custom_campaign_selected_pages );
+		}
 
-        if (count($term_ids) > 0) {
-            $args = array(
-                'taxonomy' => 'product_cat',
-                'orderby'  => 'include',
-                'include'  => $term_ids,
-                'hide_empty' => false
-            );
+		if ( count( $term_ids ) > 0 ) {
+			$args = array(
+				'taxonomy'   => 'product_cat',
+				'orderby'    => 'include',
+				'include'    => $term_ids,
+				'hide_empty' => false,
+			);
 
-            $product_categories = get_terms($args);
-            foreach ($product_categories as $category) {
-                $category_id   = $category->term_id;
-                $category_name = $category->name;
-                $response[$category_id] = array(
-                    'id'   => $category_id,
-                    'name' => $category_name
-                );
-            }
+			$product_categories = get_terms( $args );
+			foreach ( $product_categories as $category ) {
+				$category_id              = $category->term_id;
+				$category_name            = $category->name;
+				$response[ $category_id ] = array(
+					'id'   => $category_id,
+					'name' => $category_name,
+				);
+			}
 
-            //Reorder same as the `$term_ids` array
-            $response = array_map(function ($key) use ($response) {
-                return $response[$key];
-            }, $term_ids);
+			// Reorder same as the `$term_ids` array
+			$response = array_map(
+				function ( $key ) use ( $response ) {
+					return $response[ $key ];
+				},
+				$term_ids
+			);
 
-          
-            return new WP_REST_Response($response, 200);
-        }
-    }
+			return new WP_REST_Response( $response, 200 );
+		}
+	}
 
-    public function update_option($key, $value) {
-        return update_option($key, $value);
-    }
+	public function update_option( $key, $value ) {
+		return update_option( $key, $value );
+	}
 }
