@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package 1x
+ * @version 1.0.0
+ */
 
 require_once JWTPBM_PLUGIN_DIR . '/api/jwt/vendor/autoload.php';
 
@@ -7,7 +11,6 @@ use Firebase\JWT\Key;
 
 class JWTPBM_JWTManager {
 
-
 	public static $secret_key                  = 'my_secret_key';
 	public static $token_issuer                = 'im_token_issuer';
 	public static $token_audience              = 'customer';
@@ -15,18 +18,40 @@ class JWTPBM_JWTManager {
 	// public static $refreshTokenExpiryInMinutes = (120);    // 1 Minute
 	public static $tokenExpiryInSeconds = 60 * 60; // 1 hour
 
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
 	public function __construct() {
 	}
 
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return JWTPBM_JWTManager
+	 */
 	public static function getInstance() {
 		return new JWTPBM_JWTManager();
 	}
 
-
+	/**
+	 * Undocumented function
+	 *
+	 * @param integer $length
+	 * @return String
+	 */
 	public static function generateSecureToken( $length = 64 ) {
 		return bin2hex( random_bytes( $length ) );
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param integer $user_id
+	 * @return Array
+	 */
 	public function generateLoginToken( int $user_id ) {
 		$response_A = array(
 			'status'  => 0,
@@ -58,7 +83,7 @@ class JWTPBM_JWTManager {
 			);
 
 			$token_insert_response = self::storeRefreshToken( $user_id, $refreshToken, $refreshTokenExpiry_unix );
-			if ( $token_insert_response == false ) {
+			if ( $token_insert_response === false ) {
 				throw new Exception( 'Refresh token not inserted ', 500 );
 			}
 		} catch ( \Exception $e ) {
@@ -69,6 +94,14 @@ class JWTPBM_JWTManager {
 		return $response_A;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $user_id
+	 * @param [type] $refreshToken
+	 * @param [type] $expires
+	 * @return int|boolean
+	 */
 	public static function storeRefreshToken( $user_id, $refreshToken, $expires ) {
 		global $wpdb;
 		self::deleteExpiredRefreshToken();  // clear old refresh token
@@ -91,14 +124,23 @@ class JWTPBM_JWTManager {
 		}
 	}
 
-
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
 	public static function deleteExpiredRefreshToken() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . JWTPBM_DbTables::$tbl_refresh_tokens;
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE expires < %d", time() ) );
 	}
 
-
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $token
+	 * @return int|boolean
+	 */
 	public static function isRefreshTokenExists( $token ) {
 		global $wpdb;
 		self::deleteExpiredRefreshToken();
@@ -108,6 +150,12 @@ class JWTPBM_JWTManager {
 		return is_null( $user_id ) ? false : (int) $user_id;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $user_id
+	 * @return Array
+	 */
 	public static function generateAccessToken( $user_id ) {
 		$response_A = array(
 			'status'  => 0,
@@ -143,6 +191,12 @@ class JWTPBM_JWTManager {
 		return $response_A;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $token
+	 * @return stdClass
+	 */
 	public static function decode_token( $token ) {
 		$jwt        = base64_decode( $token );
 		$secret_key = self::$secret_key;

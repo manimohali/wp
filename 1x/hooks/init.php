@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package JWTPBM
  * @version 1.0
@@ -11,7 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'init', 'JWTPBM_init' );
+
+/**
+ * Initialize the plugin
+ *
+ * @return void
+ */
 function JWTPBM_init() {
 
 	// Clear the scheduled event
@@ -27,3 +31,4 @@ function JWTPBM_init() {
 		wp_schedule_single_event( time() + 24 * 60 * 60, 'custom_single_cron_job_hook' );
 	}
 }
+add_action( 'init', 'JWTPBM_init' );

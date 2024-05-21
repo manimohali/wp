@@ -1,6 +1,7 @@
 <?php
+
 $host    = '127.0.0.1';
-$db      = 'test_pacific';
+$db      = 'test_localhost';
 $user    = 'root';
 $pass    = 'password';
 $charset = 'utf8mb4';

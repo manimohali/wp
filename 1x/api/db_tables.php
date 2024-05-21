@@ -1,15 +1,22 @@
 <?php
+/**
+ * @package 1x
+ * @version 1.0
+ */
+
 
 class JWTPBM_DbTables {
+
 	public static $tbl_refresh_tokens = 'refresh_tokens';
 
-
+	/**
+	 * Undocumented function
+	 */
 	public function __construct() {
 	}
 
-	/****
-	 * @param $table_name
-	 * @return void
+	/**
+	 * Undocumented function
 	 */
 	public static function create_refresh_tokens_table() {
 		global $wpdb;

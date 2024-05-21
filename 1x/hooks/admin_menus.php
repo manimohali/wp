@@ -214,9 +214,12 @@ function page_title_slug_1_page_content() {
 }
 
 
-/*
-	Page Content 2
-*/
+
+/**
+ * Page Content 2
+ *
+ * @return void
+ */
 function page_title_slug_2_page_content() {
 	echo '<div id="1x-root"></div>';
 }

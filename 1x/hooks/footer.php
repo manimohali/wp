@@ -1,11 +1,27 @@
 <?php
+/**
+ * @package 1x
+ * @since 1.0.0
+ */
 
-add_action( 'admin_footer', 'jwtpbm_admin_footer' );
+
+/**
+ * Admin footer
+ *
+ * @return void
+ */
 function jwtpbm_admin_footer() {
 	// echo "admin_footer_test";
 }
+add_action( 'admin_footer', 'jwtpbm_admin_footer' );
 
-add_action( 'wp_footer', 'jwtpbm_wp_footer' );
+
+/**
+ * Front footer
+ *
+ * @return void
+ */
 function jwtpbm_wp_footer() {
-		// echo "wp_footer_test";
+	// echo "wp_footer_test";
 }
+add_action( 'wp_footer', 'jwtpbm_wp_footer' );

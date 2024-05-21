@@ -1,10 +1,25 @@
 <?php
+/**
+ * JWTPBM_Posts
+ *
+ * @package 1x
+ * @subpackage API
+ */
 
 class JWTPBM_Posts {
 
+	/**
+	 * Undocumented function
+	 */
 	public function __construct() {
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response|WP_Error
+	 */
 	public function get_posts( WP_REST_Request $request ) {
 
 		$page        = is_null( $request->get_param( 'page' ) ) ? 1 : $request->get_param( 'page' );
@@ -46,6 +61,12 @@ class JWTPBM_Posts {
 		}
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response
+	 */
 	public function get_post( WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
 		$post = get_post( $id );
@@ -56,7 +77,13 @@ class JWTPBM_Posts {
 		return new WP_REST_Response( $post, 200 );
 	}
 
+	/**
+	 * Undocumented function custom_get_post( WP_REST_Request $request ) {
 
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response
+	 */
 	public function get_posts_by_category( WP_REST_Request $request ) {
 		$term_id   = $request->get_param( 'term_id' );
 		$page      = is_null( $request->get_param( 'page' ) ) ? 1 : $request->get_param( 'page' );
@@ -120,6 +147,12 @@ class JWTPBM_Posts {
 		}
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $request
+	 * @return WP_REST_Response
+	 */
 	public function custom_get_customer_product_data( $request ) {
 		$customer_id = $request['customer_id'];
 		$product_id  = $request['product_id'];
@@ -137,6 +170,12 @@ class JWTPBM_Posts {
 		return new WP_REST_Response( $response, 200 );
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $request
+	 * @return WP_REST_Response
+	 */
 	public function custom_get_customer_product_data_string( $request ) {
 		$customer_id = $request['customer_id'];
 		$product_id  = $request['product_id'];

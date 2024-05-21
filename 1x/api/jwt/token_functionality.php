@@ -1,9 +1,26 @@
 <?php
+/**
+ * @package 1x
+ * @version 1.0
+ */
 
+/**
+ * Undocumented function
+ *
+ * @param integer $length
+ * @return string
+ */
 function generateSecureToken( $length = 64 ) {
 	return bin2hex( random_bytes( $length ) );
 }
 
+
+/**
+ * @param integer $userId
+ * @param string  $token
+ * @param integer $expiry
+ * @return void
+ */
 function storeRefreshToken( $userId, $token, $expiry ) {
 	global $pdo;
 	try {
@@ -20,6 +37,12 @@ function storeRefreshToken( $userId, $token, $expiry ) {
 	}
 }
 
+
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
 function clearExpiredRefreshTokens() {
 	global $pdo;
 	try {

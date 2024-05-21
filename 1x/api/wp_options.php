@@ -1,14 +1,30 @@
 <?php
+/**
+ * @package 1x
+ * @version 1.0.0
+ */
+
 
 class JWTPBM_WP_Options {
 
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
 	public function __construct() {
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response
+	 */
 	public function head_categories( WP_REST_Request $request ) {
 		$response                       = array();
 		$custom_campaign_selected_pages = get_option( 'custom_shop_page_cats', '' );
-		if ( empty( $custom_campaign_selected_pages ) || is_null( $custom_campaign_selected_pages ) || trim( $custom_campaign_selected_pages ) == '' ) {
+		if ( empty( $custom_campaign_selected_pages ) || is_null( $custom_campaign_selected_pages ) || trim( $custom_campaign_selected_pages ) === '' ) {
 			$term_ids = array();
 		} else {
 			$term_ids = explode( ',', $custom_campaign_selected_pages );
@@ -44,6 +60,13 @@ class JWTPBM_WP_Options {
 		}
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $key
+	 * @param [type] $value
+	 * @return boolean
+	 */
 	public function update_option( $key, $value ) {
 		return update_option( $key, $value );
 	}

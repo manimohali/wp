@@ -18,9 +18,9 @@ if ( ! class_exists( 'WP_CLI_1x_Command' ) ) {
 	 * @extends WP_CLI_Command
 	 */
 	class WP_CLI_1x_Command extends WP_CLI_Command {
-
-
-
+		/**
+		 * Undocumented function
+		 */
 		public function __construct() {
 			// $this->varnish_purge = new VarnishPurger();
 		}
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WP_CLI_1x_Command' ) ) {
 			WP_CLI::log( 'Log start ' );
 			// Set the URL/path.
 			if ( ! empty( $args ) ) {
-				list( $url1, $url2 ) = $args;
+				list($url1, $url2) = $args;
 			}
 
 			WP_CLI::log( 'Log End  ' );

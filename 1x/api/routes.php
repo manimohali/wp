@@ -1,20 +1,37 @@
 <?php
+/**
+ * JWTPBM Routes
+ *
+ * @package 1x
+ * @since 1.0.0
+ */
 
+
+/**
+ * Undocumented function
+ *
+ * @param [type] $request
+ * @return int
+ */
 function permission_callback_JWTPBM( $request ) {
 	$respone = verify_bearer_authorization_header_JWTPBM();
-	if ( $respone['status'] != 1 ) {
+	if ( $respone['status'] !== 1 ) {
 		return new WP_Error( 'invalid_token', $respone['message'], array( 'status' => $respone['error_code'] ) );
 	}
 	return (int) $respone['data']->sub;
 }
 
-add_action( 'rest_api_init', 'jwtpbm_register_api', 10 );
+/**
+ * Undocumented function
+ *
+ * @param [type] $wp_rest_server
+ * @return void
+ * @prefix jwtpbm ( JWT plugin By Mani )
+ */
 function jwtpbm_register_api( $wp_rest_server ) {
 	$JWTPBM_Posts      = new JWTPBM_Posts();
 	$JWTPBM_WP_Options = new JWTPBM_WP_Options();
-	/*
-	* @prefix jwtpbm ( JWT plugin By Mani )
-	*/
+
 	$route_prefix = 'jwtpbm/v1';
 
 	register_rest_route(
@@ -208,3 +225,4 @@ function jwtpbm_register_api( $wp_rest_server ) {
 		)
 	);
 }
+add_action( 'rest_api_init', 'jwtpbm_register_api', 10 );

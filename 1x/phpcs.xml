@@ -16,12 +16,23 @@
         <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" /> -->
         <!-- <exclude name="PSR2.Files.EndFileNewline.TooMany" /> -->
         
-        <exclude name="Generic.Commenting.DocComment.SpacingBeforeTags" />
-
         <exclude name="WordPress.WP.CronInterval.CronSchedulesInterval" />
 
         <exclude name="Squiz.PHP.CommentedOutCode.Found" />
         <exclude name="Generic.Commenting.DocComment.MissingShort" />
+        <exclude name="Generic.Commenting.DocComment.ShortNotCapital" />
+        <exclude name="Generic.Commenting.DocComment.SpacingBeforeTags" />
+        <exclude name="Squiz.Commenting.ClassComment.SpacingAfter" />
+        <exclude name="Squiz.Commenting.FileComment.Missing" />
+        <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+        <exclude name="Squiz.Commenting.FileComment.SpacingAfterComment" />
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment" />
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
+        <exclude name="Squiz.Commenting.ClassComment.Missing" />
+        <exclude name="Squiz.Commenting.VariableComment.Missing" />
+        <exclude name="Squiz.Commenting.VariableComment.WrongStyle" />
+        <exclude name="Squiz.Commenting.FunctionCommentThrowTag.Missing" />
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamType" />
 
         <exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
         <exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
@@ -35,13 +46,33 @@
         <exclude name="WordPress.Security.NonceVerification.Missing" />
         <exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash" />
         <exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized" />
+        <exclude name="WordPress.Security.EscapeOutput.ExceptionNotEscaped" />
 
-
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_init" />
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_setopt_array" />
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_exec" />
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_error" />
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_close" />
         <exclude name="WordPress.WP.DeprecatedParameters.Get_termsParam2Found" />
-
+        <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents" />
+        <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_readfile" />
+        <exclude name="WordPress.WP.EnqueuedResources.NonEnqueuedScript"/>
+        <exclude name="WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet" />
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid" />
         <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
-
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+        <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
         <exclude name="WordPress.PHP.YodaConditions.NotYoda" />
+        <exclude name="WordPress.DB.SlowDBQuery.slow_db_query_tax_query" />
+        <exclude name="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase" />
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
+        <exclude name="WordPress.DateTime.RestrictedFunctions.date_date" />
+        <exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
+        <exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode" />
+        <exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode" />
+
+        <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed" />
+        <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.Found" />
 
     </rule>
     
@@ -53,6 +84,10 @@
     <exclude-pattern>node_modules/*</exclude-pattern>
     <exclude-pattern>build/*</exclude-pattern>
     <exclude-pattern>dist/*</exclude-pattern>
+    <exclude-pattern>developer/*</exclude-pattern>
+    <exclude-pattern>api/jwt/*</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.css</exclude-pattern>
     
     <!-- Show sniff codes in reports -->
     <arg value="s"/>

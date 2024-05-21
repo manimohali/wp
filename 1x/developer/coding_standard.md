@@ -32,3 +32,14 @@ composer require --dev wp-coding-standards/wpcs
 ```bash
     ./vendor/bin/phpcs -vvv
 ```
+
+
+######  Check all issue in your code
+```bash
+    ./vendor/bin/phpcs
+```
+
+######  Fix your code issue
+```bash
+    ./vendor/bin/phpcbf
+```

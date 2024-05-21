@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package 1x
+ * @version 1.0
+ */
+
 
 require 'vendor/autoload.php';
 require_once './token_functionality.php';
@@ -27,17 +32,17 @@ try {
 	}
 
 	$authorization = explode( ' ', $headers['Authorization'] );
-	if ( count( $authorization ) != 2 ) {
+	if ( count( $authorization ) !== 2 ) {
 		$http_response_code = 400;
 		throw new Exception( 'Authorization header is not valid' );
 	}
 
 	$token_type = strtolower( trim( $authorization[0] ) );
-	if ( $token_type != 'bearer' ) {
+	if ( $token_type !== 'bearer' ) {
 		$http_response_code = 400;
 		throw new Exception( 'Authorization token type is not valid' );
 	}
-	if ( trim( $authorization[1] ) == '' ) {
+	if ( trim( $authorization[1] ) === '' ) {
 		$http_response_code = 401;
 		throw new Exception( 'Authorization token is not valid' );
 	}
@@ -59,5 +64,5 @@ try {
 
 header( 'Content-Type: application/json' );
 http_response_code( $http_response_code );
-echo json_encode( $response );
+echo wp_json_encode( $response );
 die();

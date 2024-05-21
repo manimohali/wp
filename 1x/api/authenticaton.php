@@ -15,12 +15,12 @@ function jwtpbm_get_access_token( WP_REST_Request $request ) {
 	$refreshToken = trim( $request->get_param( 'refreshToken' ) );
 	$user_ID      = JWTPBM_JWTManager::isRefreshTokenExists( $refreshToken );
 
-	if ( $user_ID == false ) {
+	if ( $user_ID === false ) {
 		return new WP_Error( 'invalid_refresh_token', 'Invalid refresh token please login again', array( 'status' => 401 ) );
 	}
 
 	$token_response = JWTPBM_JWTManager::generateAccessToken( $user_ID );
-	if ( $token_response['status'] == 0 ) {
+	if ( $token_response['status'] === 0 ) {
 		return new WP_Error( 'token_generation_failed', $token_response['message'], array( 'status' => 401 ) );
 	}
 
@@ -113,7 +113,7 @@ function jwtpbm_login( WP_REST_Request $request ) {
 	JWTPBM_DbTables::create_refresh_tokens_table();
 
 	$token_response = JWTPBM_JWTManager::getInstance()->generateLoginToken( $user->ID );
-	if ( $token_response['status'] == 0 ) {
+	if ( $token_response['status'] === 0 ) {
 		return new WP_Error( 'token_generation_failed', $token_response['message'], array( 'status' => 401 ) );
 	}
 
@@ -122,6 +122,11 @@ function jwtpbm_login( WP_REST_Request $request ) {
 }
 
 
+/**
+ * Undocumented function
+ *
+ * @return $response
+ */
 function verify_bearer_authorization_header_JWTPBM() {
 	$headers             = getallheaders();
 	$response            = array();
@@ -134,15 +139,15 @@ function verify_bearer_authorization_header_JWTPBM() {
 		}
 
 		$authorization = explode( ' ', $headers['Authorization'] );
-		if ( count( $authorization ) != 2 ) {
+		if ( count( $authorization ) !== 2 ) {
 			throw new Exception( 'Authorization header is not valid', 400 );
 		}
 
 		$token_type = strtolower( trim( $authorization[0] ) );
-		if ( $token_type != 'bearer' ) {
+		if ( $token_type !== 'bearer' ) {
 			throw new Exception( 'Authorization token type is not valid', 400 );
 		}
-		if ( trim( $authorization[1] ) == '' ) {
+		if ( trim( $authorization[1] ) === '' ) {
 			throw new Exception( 'Authorization token is not valid', 401 );
 		}
 
@@ -154,7 +159,7 @@ function verify_bearer_authorization_header_JWTPBM() {
 		$response['data']    = $decoded;
 	} catch ( \Exception  $e ) {
 		$error_mesage           = $e->getMessage();
-		$response['error_code'] = $e->getCode() == 0 ? 400 : $e->getCode();
+		$response['error_code'] = $e->getCode() === 0 ? 400 : $e->getCode();
 		$response['message']    = $error_mesage;
 	}
 
@@ -172,9 +177,10 @@ function is_request_to_rest_api_jwtpbm() {
 	$request_uri = esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 
 	// Check if the request is to the WC API endpoints.
-	$woocommerce = ( false !== strpos( $request_uri, $rest_prefix . 'wc/' ) ||
+	$woocommerce = (
+		false !== strpos( $request_uri, $rest_prefix . 'wc/' ) ||
 					false !== strpos( $request_uri, $rest_prefix . 'jwtpbm/' )
-					);
+	);
 	return $woocommerce;
 }
 
@@ -182,8 +188,7 @@ function is_request_to_rest_api_jwtpbm() {
 
 /**
  * @param $user_id  int|false
-*/
-add_filter( 'determine_current_user', 'authenticate_jwtpbm', 10 );
+ */
 function authenticate_jwtpbm( $user_id ) {
 
 	if ( ! is_request_to_rest_api_jwtpbm() ) {
@@ -196,14 +201,13 @@ function authenticate_jwtpbm( $user_id ) {
 	}
 
 	$respone = verify_bearer_authorization_header_JWTPBM();
-	if ( $respone['status'] != 1 ) {
+	if ( $respone['status'] !== 1 ) {
 		return $user_id;
 	}
 
 	return (int) $respone['data']->sub;
 }
-
-
+add_filter( 'determine_current_user', 'authenticate_jwtpbm', 10 );
 
 
 
@@ -214,9 +218,7 @@ function authenticate_jwtpbm( $user_id ) {
  * @param $context  string   read|create|edit|delete|batch
  * @param $object_id  int  UserId
  * @param $post_type  string    'reports'| 'product'
-*/
-
-add_filter( 'woocommerce_rest_check_permissions', 'jwtpbm_override_user_permission', 9999999, 4 );
+ */
 function jwtpbm_override_user_permission( $permission, $context, $object_id, $post_type ) {
 	if ( $permission ) {
 		return $permission;   // If permission is already true then return it
@@ -228,14 +230,15 @@ function jwtpbm_override_user_permission( $permission, $context, $object_id, $po
 
 	$user    = wp_get_current_user();
 	$user_id = (int) $user->ID;
-	if ( $user_id == 0 ) {
+	if ( $user_id === 0 ) {
 		return $permission;
 	}
 
 	// if user customer and has capability to read
-	if ( in_array( 'customer', $user->roles ) && current_user_can( 'read' ) ) {
+	if ( in_array( 'customer', $user->roles, true ) && current_user_can( 'read' ) ) {
 		return true;
 	}
 
 	return $permission;
 }
+add_filter( 'woocommerce_rest_check_permissions', 'jwtpbm_override_user_permission', 9999999, 4 );

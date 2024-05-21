@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: 1x
  * Plugin URI: https://github.com/1x/1x
@@ -9,6 +8,9 @@
  * Author URI: https://github.com/1x
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
+ * Text Domain: 1x
+ * Domain Path: /languages
+ * @package 1x
  */
 
 
@@ -60,8 +62,11 @@ require_once JWTPBM_PLUGIN_DIR . '/hooks/index.php';
 /** included cron file */
 require_once JWTPBM_PLUGIN_DIR . '/cron/index.php';
 
-add_action( 'admin_menu', 'custom_menu_page_2' );
-
+/**
+ * custom_menu_page_2
+ *
+ * @return void
+ */
 function custom_menu_page_2() {
 	add_menu_page(
 		'Sortable Menu', // Page title
@@ -73,7 +78,14 @@ function custom_menu_page_2() {
 		30 // Position
 	);
 }
+add_action( 'admin_menu', 'custom_menu_page_2' );
 
+
+/**
+ * sortable_menu_page
+ *
+ * @return void
+ */
 function sortable_menu_page() {
 	$cat_data_arr = array();
 	$args         = array(
@@ -365,7 +377,7 @@ function sortable_menu_page() {
 
 		}
 
-		<?php echo 'var cat_data_arr = ' . json_encode( $cat_data_arr ) . ';'; ?>
+		<?php echo 'var cat_data_arr = ' . wp_json_encode( $cat_data_arr ) . ';'; ?>
 
 			(function($) {
 				$(document).ready(function() {
@@ -472,12 +484,16 @@ function sortable_menu_page() {
 	<?php
 }
 
-// Save menu order
-add_action( 'wp_ajax_save_menu_order', 'save_menu_order_callback' );
 
+/**
+ * Save menu order callback
+ *
+ * @return void
+ */
 function save_menu_order_callback() {
 	if ( isset( $_POST['order'] ) ) {
 		$order = $_POST['order'];
 	}
 	wp_die(); // Always include this line to end AJAX requests properly
 }
+add_action( 'wp_ajax_save_menu_order', 'save_menu_order_callback' );
