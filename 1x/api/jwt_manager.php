@@ -16,7 +16,7 @@ class JWTPBM_JWTManager {
 	public static $token_audience              = 'customer';
 	public static $refreshTokenExpiryInMinutes = ( 60 * 60 * 24 );    // 24 hours
 	// public static $refreshTokenExpiryInMinutes = (120);    // 1 Minute
-	public static $tokenExpiryInSeconds = 60 * 60; // 1 hour
+	public static $tokenExpiryInSeconds = (60 * 60 * 4); // 4 hour
 
 	/**
 	 * Undocumented function

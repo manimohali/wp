@@ -1,21 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import NotFound from './components/NotFound';
+import Products from './components/Products';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-     
-    </>
-  )
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="products" element={<Products />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

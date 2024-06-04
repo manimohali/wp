@@ -445,40 +445,40 @@ function sortable_menu_page() {
 }
 
 
-		.content {
-			display: none;
-		}
+.content {
+	display: none;
+}
 
-		.dd-handle.height-auto .content {
-			display: block;
-		}
+.dd-handle.height-auto .content {
+	display: block;
+}
 
-		.dd-handle label {
-			width: 100%;
-			display: block;
-		}
+.dd-handle label {
+	width: 100%;
+	display: block;
+}
 
-		.dd-handle .item-edit {
-			background: deepskyblue;
-			width: 40px;
-			display: inline-block;
-			text-align: center;
-			color: #000;
-			padding: 0px 0px;
-		}
+.dd-handle .item-edit {
+	background: deepskyblue;
+	width: 40px;
+	display: inline-block;
+	text-align: center;
+	color: #000;
+	padding: 0px 0px;
+}
 
-		.dd-handle span.item_name {
-			display: inline-block;
-			width: calc(99.4% - 40px);
-		}
+.dd-handle span.item_name {
+	display: inline-block;
+	width: calc(99.4% - 40px);
+}
 
-		.height-auto {
-			height: auto;
-		}
+.height-auto {
+	height: auto;
+}
 
-		.display-none {
-			display: none;
-		}
+.display-none {
+	display: none;
+}
 	</style>
 
 	<?php
