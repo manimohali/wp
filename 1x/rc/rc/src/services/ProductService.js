@@ -1,31 +1,44 @@
 import React from 'react';
+import axios from 'axios';
 
 class ProductService {
-  static getProducts() {
-    // Assuming REACT_APP_API_BASE_URL is the base URL defined in your .env file
+  static getProducts(page = 1, perPage = 2, stockStatus = '', productType = '', afterDate = '', beforeDate = '') {
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const token = import.meta.env.VITE_TOKEN;
 
-    // Append '/products' to the base URL
-    const url = `${baseUrl}/products`;
-
-    const headers = new Headers({
-      "Authorization": `Bearer ${token}`
+    // Constructing query parameters based on the inputs
+    const params = new URLSearchParams({
+      page: page,
+      per_page: perPage
     });
 
+    // Conditionally add stock status and product type if they are provided
+    if (stockStatus) params.append('stock_status', stockStatus);
+    if (productType) params.append('type', productType);
 
-    const requestOptions = {
-      method: 'GET',
-      headers: headers,
-      redirect: 'follow'
+    // Add date filters if provided and ensure they are in ISO8601 format
+    if (afterDate) params.append('after', new Date(afterDate).toISOString());
+    if (beforeDate) params.append('before', new Date(beforeDate).toISOString());
+
+    const url = `${baseUrl}/wc/v3/products?${params.toString()}`;
+
+    const headers = {
+      "Authorization": `Bearer ${token}`
     };
 
-    return fetch(url, requestOptions)
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
+    return axios.get(url, { headers })
+      .then(response => {
+        return {
+          products: response.data,
+          totalPages: parseInt(response.headers['x-wp-totalpages'], 10) // Assuming the total pages header is available
+        };
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+        return null;
+      });
   }
 }
 
 export default ProductService;
-
 
