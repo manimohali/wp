@@ -17,3 +17,8 @@
     width: auto;
     display: inline-grid;
 }
+
+.dataTable {
+  width: 100%;
+  overflow-x: auto;
+}

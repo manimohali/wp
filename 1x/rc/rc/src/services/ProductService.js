@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 class ProductService {
-  static getProducts(page = 1, perPage = 2, stockStatus = '', productType = '', afterDate = '', beforeDate = '') {
+  static getProducts(page = 1, perPage = 10, stockStatus = '', productType = '', afterDate = '', beforeDate = '', minPrice = '', maxPrice = '') {
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const token = import.meta.env.VITE_TOKEN;
 
@@ -11,10 +11,11 @@ class ProductService {
       page: page,
       per_page: perPage
     });
-
-    // Conditionally add stock status and product type if they are provided
+    // Conditionally add stock status, product type, and price filters if they are provided
     if (stockStatus) params.append('stock_status', stockStatus);
     if (productType) params.append('type', productType);
+    if (minPrice) params.append('min_price', minPrice);
+    if (maxPrice) params.append('max_price', maxPrice);
 
     // Add date filters if provided and ensure they are in ISO8601 format
     if (afterDate) params.append('after', new Date(afterDate).toISOString());
@@ -41,4 +42,3 @@ class ProductService {
 }
 
 export default ProductService;
-

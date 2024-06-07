@@ -22,7 +22,7 @@ function jwtpbm_add_admin_menu() {
 
 	add_menu_page(
 		'Page title 2',
-		'Menu Title 2',
+		'Products',
 		'manage_options',
 		'page-title-slug-2',
 		'page_title_slug_2_page_content',
